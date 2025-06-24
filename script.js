@@ -67,16 +67,24 @@ function renderUserData(userValue) {
   });
 }
 
+function urlValidator(url) {
+  const pattern = /^(https?:\/\/)([\w.-]+)\.([a-z]{2,})(:[0-9]{1,5})?(\/.*)?$/i;
+  return pattern.test(url);
+}
+
 userForm.addEventListener(`submit`, (e) => {
   e.preventDefault();
-  if (!activeUser || activeUser === `selectUsers`) {
-    alert("Please select a user first.");
-    return;
-  }
-
   const title = inputTitle.value.trim();
   const description = inputDescription.value.trim();
   const URL = inputURL.value.trim();
+
+  if (!activeUser || activeUser === `selectUsers`) {
+    alert("Please select a user first.");
+    return;
+  } else if (!urlValidator(URL)) {
+    alert("URL is not valid");
+    return;
+  }
 
   const newBookmark = {
     title,
