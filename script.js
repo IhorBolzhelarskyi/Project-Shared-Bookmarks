@@ -34,9 +34,11 @@ userSelect.addEventListener(`change`, (e) => {
   if (!activeUser || activeUser === `selectUsers`) {
     console.log(`exit`);
     selectUserMessage.textContent = "Please select user!";
+    renderUserData(activeUser);
     return;
   }
   renderUserData(activeUser);
+  userForm.reset();
 });
 
 function renderUserData(userValue) {
