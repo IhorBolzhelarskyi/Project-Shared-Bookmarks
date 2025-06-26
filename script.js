@@ -6,6 +6,8 @@
 
 import { getUserIds, getData, setData, clearData } from "./storage.js";
 
+import { urlValidator } from "./urlValidator.js";
+
 const userForm = document.querySelector("#userForm");
 const userSelect = document.querySelector("#userSelect");
 const inputTitle = document.querySelector("#title");
@@ -67,11 +69,6 @@ function renderUserData(userValue) {
 `;
     bookmarksContainer.insertAdjacentHTML(`beforeend`, HTML);
   });
-}
-
-function urlValidator(url) {
-  const pattern = /^(https?:\/\/)([\w.-]+)\.([a-z]{2,})(:[0-9]{1,5})?(\/.*)?$/i;
-  return pattern.test(url);
 }
 
 userForm.addEventListener(`submit`, (e) => {

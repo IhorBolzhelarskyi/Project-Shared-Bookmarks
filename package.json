@@ -1,0 +1,26 @@
+{
+  "name": "project-shared-bookmarks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IhorBolzhelarskyi/Project-Shared-Bookmarks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IhorBolzhelarskyi/Project-Shared-Bookmarks/issues"
+  },
+  "homepage": "https://github.com/IhorBolzhelarskyi/Project-Shared-Bookmarks#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.27.2",
+    "jest": "^30.0.3",
+    "jest-environment-jsdom": "^30.0.2"
+  }
+}
