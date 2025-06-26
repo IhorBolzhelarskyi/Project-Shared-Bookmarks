@@ -19,8 +19,7 @@ const selectUserMessage = document.querySelector("#selectUserMessage");
 const usersArray = getUserIds();
 let activeUser = null;
 
-window.onload = function () {};
-
+// Render user options into the <select> dropdown
 function renderOptions(users) {
   users.forEach((user) => {
     const option = document.createElement("option");
@@ -31,26 +30,31 @@ function renderOptions(users) {
 }
 renderOptions(usersArray);
 
+// Handle user selection from the dropdown
 userSelect.addEventListener(`change`, (e) => {
   activeUser = e.currentTarget.value;
   if (!activeUser || activeUser === `selectUsers`) {
-    console.log(`exit`);
+    // If no valid user is selected, show message
     selectUserMessage.textContent = "Please select user!";
     renderUserData(activeUser);
     return;
   }
+  // If user selected, render bookmarks and reset form
   renderUserData(activeUser);
   userForm.reset();
 });
 
+// Display user-specific bookmarks
 function renderUserData(userValue) {
   bookmarksContainer.innerHTML = "";
   const userData = getData(userValue);
   if (!userData || userData.length === 0) {
+    // Show message if no bookmarks are found
     selectUserMessage.textContent = "This user hasn't added any bookmarks yet.";
     bookmarksContainer.innerHTML = "";
     return;
   }
+  // Clear message and render sorted bookmarks
   selectUserMessage.textContent = "";
   const sortedData = userData.toSorted((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   sortedData.forEach((bookmark) => {
@@ -71,20 +75,26 @@ function renderUserData(userValue) {
   });
 }
 
+// Handle form submission to add a new bookmark
 userForm.addEventListener(`submit`, (e) => {
   e.preventDefault();
   const title = inputTitle.value.trim();
   const description = inputDescription.value.trim();
   const URL = inputURL.value.trim();
 
+  // Validate user selection and URL format
   if (!activeUser || activeUser === `selectUsers`) {
     alert("Please select a user first.");
+    return;
+  } else if (!title || !description) {
+    alert("Please fill in both Title and Description.");
     return;
   } else if (!urlValidator(URL)) {
     alert("URL is not valid");
     return;
   }
 
+  // Create a new bookmark entry
   const newBookmark = {
     title,
     description,
@@ -92,13 +102,16 @@ userForm.addEventListener(`submit`, (e) => {
     createdAt: new Date().toISOString(),
   };
 
+  // Save the new bookmark in localStorage
   const bookMarks = getData(activeUser) || [];
   bookMarks.push(newBookmark);
   setData(activeUser, bookMarks);
+  // Reset the form and re-render bookmarks
   userForm.reset();
   renderUserData(activeUser);
 });
 
+// Handle "Delete all" button click to remove all bookmarks for current user
 deleteAllBookmarks.addEventListener(`click`, () => {
   clearData(activeUser);
   renderUserData(activeUser);
